@@ -1,4 +1,14 @@
 <?php
+session_start(); // Start the session.
+
+// Redirect to login page if not authenticated.
+if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
+    header('Location: index.php'); // Adjust the path to your actual login page.
+    exit;
+}
+
+
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -28,13 +38,19 @@ while ($row = $acceptedResult->fetch_assoc()) {
 if(isset($_GET['approve']) && isset($_GET['id'])) {
     $id = $_GET['id'];
     $conn->query("UPDATE products SET status = 'accepted' WHERE p_id = {$id}");
-    header("Location: ".$_SERVER['PHP_SELF']);  // Redirect back to the same page to reflect changes
+    header("Location: ".$_SERVER['PHP_SELF']);
     exit();
 }
 if(isset($_GET['publish']) && isset($_GET['id'])) {
     $id = $_GET['id'];
     $conn->query("UPDATE products SET status = 'published' WHERE p_id = {$id}");
-    header("Location: ".$_SERVER['PHP_SELF']);  // Redirect back to the same page to reflect changes
+    header("Location: ".$_SERVER['PHP_SELF']);
+    exit();
+}
+if(isset($_GET['delete']) && isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $conn->query("UPDATE products SET status = 'WIP_add' WHERE p_id = {$id}");
+    header("Location: ".$_SERVER['PHP_SELF']);
     exit();
 }
 ?>
@@ -64,7 +80,7 @@ if(isset($_GET['publish']) && isset($_GET['id'])) {
             <td>Cost</td>
             <td>Price</td>
             <td>Features</td>
-            <td>Approve</td>
+            <td>Actions</td>
         </tr>
 
         <?php
@@ -77,7 +93,10 @@ if(isset($_GET['publish']) && isset($_GET['id'])) {
                 <td>{$product['cost']}</td>
                 <td>{$product['price']}</td>
                 <td><a href='view_features.php?id={$product['p_id']}'>View Features</a></td>
-                <td><a href='?approve=1&id={$product['p_id']}'>Approve</a></td>
+                <td>
+                    <a href='?approve=1&id={$product['p_id']}'>Approve</a> | 
+                    <a href='?delete=1&id={$product['p_id']}'>Delete Request</a>
+                </td>
             </tr>";
         }
         if (empty($data)) {

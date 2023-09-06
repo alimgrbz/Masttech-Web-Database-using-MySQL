@@ -1,4 +1,14 @@
 <?php
+
+session_start(); // Start the session.
+
+// Redirect to login page if not authenticated.
+if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
+    header('Location: index.html'); // Adjust the path to your actual login page.
+    exit;
+}
+
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 

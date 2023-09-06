@@ -1,4 +1,16 @@
 <?php
+
+
+session_start(); // Start the session.
+
+// Redirect to login page if not authenticated.
+if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
+    header('Location: index.html'); // Adjust the path to your actual login page.
+    exit;
+}
+
+
+
 include("db.php");
 
 $id = $_GET['id'] ?? null;
