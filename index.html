@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masttech Welcome</title>
+    <link rel="stylesheet" href="firststyle.css">
+</head>
+
+<body>
+    <div class="container">
+        <img src="masttech-logo.png" alt="Masttech Logo" id="masttechLogo">
+        <h2>Welcome to Masttech </h2>
+        <br>
+
+        <!-- Sign Up and Login text links -->
+        <a href="#" onclick="showForm('signupForm'); return false;">Sign Up</a>
+        <span> | </span>
+        <a href="#" onclick="showForm('loginForm'); return false;">Login</a>
+
+        <!-- Signup Form -->
+        <div id="signupForm" style="display:none;">
+            <h2>Sign Up</h2>
+            <form action="signup.php" method="post">
+                <input type="text" id="c_name" name="c_name" placeholder="Name">
+                <input type="email" id="c_email" name="c_email" placeholder="Email">
+                <input type="password" id="pwd" name="pwd" placeholder="Password">
+                <select id="userType" name="userType" onchange="togglePasscodeField();">
+                    <option value="customer">Customer</option>
+                    <option value="staff">Staff</option>
+                </select>
+                <input type="password" id="staffPasscode" name="staffPasscode" placeholder="Enter passcode" style="display:none;">
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+
+        <!-- Login Form -->
+        <div id="loginForm" style="display:none;">
+            <h2>Login</h2>
+            <form action="login.php" method="post">
+                <input type="email" id="c_email" name="c_email" placeholder="Email">
+                <input type="password" id="pwd" name="pwd" placeholder="Password">
+                <button type="submit">Login</button>
+            </form>
+        </div>
+
+        <br>
+        <button onclick="window.location.href='logout.php'" style="display:none;" id="logoutBtn">Logout</button>
+    </div>
+
+    <script>
+        function togglePasscodeField() {
+            const userType = document.getElementById('userType').value;
+            const passcodeField = document.getElementById('staffPasscode');
+
+            if (userType === 'staff') {
+                passcodeField.style.display = 'block';
+            } else {
+                passcodeField.style.display = 'none';
+            }
+        }
+
+        function showForm(formId) {
+            const signupForm = document.getElementById('signupForm');
+            const loginForm = document.getElementById('loginForm');
+
+            // Reset form displays
+            signupForm.style.display = 'none';
+            loginForm.style.display = 'none';
+
+            // Display the chosen form
+            if (formId === 'signupForm') {
+                signupForm.style.display = 'block';
+            } else if (formId === 'loginForm') {
+                loginForm.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+
+</html>
