@@ -15,8 +15,7 @@ This project is a Web Application development for Masttech's product database, f
 ## Database Design
 
 The database is designed using **MySQL** on **MySQL Workbench**.
-
-![Database visualization](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/73c4cb4d-c89f-43e9-8a8d-6ea257460797/Untitled.png)
+![image](https://github.com/alimgrbz/Masttech-Web-Database-using-MySQL/assets/134507100/2d0f3be1-50ef-4fc6-80a9-569dfc5d7827)
 This is the visualization of the database system for the website.
 
 ## Website
