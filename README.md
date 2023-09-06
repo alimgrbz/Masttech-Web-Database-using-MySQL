@@ -1,5 +1,5 @@
 # Masttech-Web-Database
-
+ 
 This project is a Web Application development for Masttech's product database, for both customers and staffs.
 
 ## Features
@@ -38,7 +38,6 @@ Customers: They are presented with two primary functionalities:
 A transparent view of all products.
 A tailored experience, letting them discern the best products aligned with their unique needs.
 
-
 ## **User Roles and Workflow**
 
 The website has been crafted with a robust user hierarchy, all under the meticulous oversight of the **Admin**. This ensures a controlled and structured workflow process.
@@ -60,4 +59,3 @@ For a product to be visible to the customers, it must pass through a rigorous th
 3. **Approval** by the Approver for final release.
 
 Only products that successfully traverse all these stages are published and made available to customers.
-
