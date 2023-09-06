@@ -1,9 +1,17 @@
 <?php
+
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 include("db.php");
+session_start();
 
+// Check if the user is not logged in
+if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
+    header("Location: index.html");
+    exit;
+}
 $data = [];
 
 $result = $conn->query("SELECT products.*, f1.f_value AS cost, f2.f_value AS price FROM products 

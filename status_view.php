@@ -1,20 +1,16 @@
 <?php
 
-session_start(); // Start the session.
-
-// Redirect to login page if not authenticated.
-if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
-    header('Location: index.html'); // Adjust the path to your actual login page.
-    exit;
-}
-
-
-
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 include("db.php");
+session_start();
 
+// Check if the user is not logged in
+if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
+    header("Location: index.html");
+    exit;
+}
 $statuses = ['WIP_add', 'WIP_check', 'accepted', 'published'];
 $data = [];
 

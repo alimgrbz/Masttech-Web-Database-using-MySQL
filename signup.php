@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt->execute()) {
         echo "New record created successfully";
         // Here you can also redirect to a login page or dashboard
-        header('Location: index.php');
+        header('Location: index.html');
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }

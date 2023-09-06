@@ -1,18 +1,13 @@
 <?php
 
+include("db.php");
+session_start();
 
-session_start(); // Start the session.
-
-// Redirect to login page if not authenticated.
-if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
-    header('Location: index.html'); // Adjust the path to your actual login page.
+// Check if the user is not logged in
+if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
+    header("Location: index.html");
     exit;
 }
-
-
-
-include("db.php");
-
 $id = $_GET['id'] ?? null;
 
 $features = [];

@@ -2,6 +2,11 @@
 require 'db.php';
 session_start();
 
+if ($_SERVER["REQUEST_METHOD"] != "POST") {
+    header("Location: index.html");
+    exit;
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['c_email'];
     $password = $_POST['pwd'];
@@ -46,9 +51,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['userType'] = $user['c_access_level'];
 
             switch ($_SESSION['userType']) {
-                case 'customer':
+                case 'c':
                     header('Location: customerindex.php');
                     break;
+                
                 case 'adder':
                     header('Location: adder_dashboard.php');
                     break;
