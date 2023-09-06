@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     echo "New record created successfully";
-    header('Location: staffindex.php');
+    header('Location: adder_dashboard.php');
     exit;
 }
 ?>
