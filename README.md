@@ -38,20 +38,26 @@ Customers: They are presented with two primary functionalities:
 A transparent view of all products.
 A tailored experience, letting them discern the best products aligned with their unique needs.
 
-## User Roles
- The website implements a structured user hierarchy, managed exclusively by the Admin, ensuring stringent control and workflow oversight.
 
-User Roles:
-Admin: Holds the highest privilege, responsible for the overall management of the platform, including the registration of staff members.
-Staff1 (Adder): Entrusted with the initial task of adding new product details to the database.
-Staff2 (Checker): Reviews and verifies the data added by the Adder, ensuring its accuracy and consistency.
-Staff3 (Approver): Upon Checker's validation, the Approver evaluates the product details and, if found satisfactory, approves its release.
-Customer: The end user who gets access to view products once they have passed through the Adder > Checker > Approver workflow.
-Product Release Workflow:
-For a product to become available for the customers, it undergoes a rigorous three-tier validation process:
+## **User Roles and Workflow**
 
-Addition by the Adder.
-Verification by the Checker for data consistency and accuracy.
-Approval by the Approver for final release.
-Only upon successful navigation through all these stages is a product published and made visible to customers.
- 
+The website has been crafted with a robust user hierarchy, all under the meticulous oversight of the **Admin**. This ensures a controlled and structured workflow process.
+
+### **User Roles**:
+
+- **Admin**: The central authority on the platform. Their responsibilities span across various facets, most prominently the registration of staff members.
+- **Staff1 (Adder)**: Primarily responsible for adding new product details to the database.
+- **Staff2 (Checker)**: Ensures the accuracy and consistency of data by reviewing and verifying the information added by the Adder.
+- **Staff3 (Approver)**: Upon the Checker's validation, they evaluate the product details and, if satisfactory, greenlight its release.
+- **Customer**: The end users, they gain access to view products once they have successfully navigated the Adder > Checker > Approver workflow.
+
+### **Product Release Workflow**:
+
+For a product to be visible to the customers, it must pass through a rigorous three-tier validation process:
+
+1. **Addition** by the Adder.
+2. **Verification** by the Checker for data consistency and accuracy.
+3. **Approval** by the Approver for final release.
+
+Only products that successfully traverse all these stages are published and made available to customers.
+
