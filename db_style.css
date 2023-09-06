@@ -138,3 +138,26 @@ a:hover {
     padding: 8px;
     border: 1px solid #ccc;
 }
+
+.filter-btn, .unfilter-btn {
+    display: inline-block;
+    background-color: #3498db;  /* Main color */
+    color: #fff;
+    padding: 8px 16px;
+    margin: 5px 10px 5px 0;  /* Added top and bottom margin */
+    border-radius: 4px;
+    border: none;  /* Remove default border for button */
+    cursor: pointer;  /* Hand cursor */
+    transition: background-color 0.3s;
+    text-decoration: none;
+}
+
+.filter-btn:hover, .unfilter-btn:hover {
+    background-color: #2980b9;  /* Slightly darker color on hover */
+}
+
+.filter-actions {
+    display: flex;
+    justify-content: space-between; /* This will put maximum space between the two items */
+    align-items: center; /* This will vertically center align them if they have different heights */
+}

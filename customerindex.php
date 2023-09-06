@@ -14,6 +14,7 @@ if (isset($_GET['order_by'])) {
 if (isset($_GET['order_dir'])) {
     $order_dir = $_GET['order_dir'];
 }
+$p_type_filter = isset($_GET['p_type']) ? $_GET['p_type'] : '';
 
 // Capture filter inputs
 $min_price_filter = isset($_GET['min_price']) && is_numeric($_GET['min_price']) ? $_GET['min_price'] : null;
@@ -36,46 +37,74 @@ $maximum_payload_capacity_kg_max = isset($_GET['maximum_payload_capacity_kg_max'
 
 $filter_clauses = ["products.status = 'published'"];
 
+if ($p_type_filter !== '') {
+    $filter_clauses[] = "products.p_type = '{$p_type_filter}'";
+}
+
 // Price filter
 if ($min_price_filter !== null) {
-    $filter_clauses[] = "f2.f_value >= {$min_price_filter}";
+    $filter_clauses[] = "priceFeature.f_value >= {$min_price_filter}";
 }
 if ($max_price_filter !== null) {
-    $filter_clauses[] = "f2.f_value <= {$max_price_filter}";
+    $filter_clauses[] = "priceFeature.f_value <= {$max_price_filter}";
 }
 
 // Extended Height(m) filter
-if ($feature_Extended_Height_m_min && $feature_Extended_Height_m_max) {
-    $filter_clauses[] = "features.f_name = 'Extended Height(m)' AND features.f_value BETWEEN {$feature_Extended_Height_m_min} AND {$feature_Extended_Height_m_max}";
+if ($feature_Extended_Height_m_min !== '') {
+    $filter_clauses[] = "extendedHeightFeature.f_value >= {$feature_Extended_Height_m_min}";
+}
+if ($feature_Extended_Height_m_max !== '') {
+    $filter_clauses[] = "extendedHeightFeature.f_value <= {$feature_Extended_Height_m_max}";
 }
 
 // Retracted Height(m) filter
-if ($feature_Retracted_Height_m_min && $feature_Retracted_Height_m_max) {
-    $filter_clauses[] = "features.f_name = 'Retracted Height(m)' AND features.f_value BETWEEN {$feature_Retracted_Height_m_min} AND {$feature_Retracted_Height_m_max}";
+if ($feature_Retracted_Height_m_min !== '') {
+    $filter_clauses[] = "retractedHeightFeature.f_value >= {$feature_Retracted_Height_m_min}";
+}
+if ($feature_Retracted_Height_m_max !== '') {
+    $filter_clauses[] = "retractedHeightFeature.f_value <= {$feature_Retracted_Height_m_max}";
 }
 
 // Weight(kg) filter
-if ($feature_Weight_kg_min && $feature_Weight_kg_max) {
-    $filter_clauses[] = "features.f_name = 'Weight(kg)' AND features.f_value BETWEEN {$feature_Weight_kg_min} AND {$feature_Weight_kg_max}";
+if ($feature_Weight_kg_min !== '') {
+    $filter_clauses[] = "weightFeature.f_value >= {$feature_Weight_kg_min}";
+}
+if ($feature_Weight_kg_max !== '') {
+    $filter_clauses[] = "weightFeature.f_value <= {$feature_Weight_kg_max}";
 }
 
 // Number of Sections filter
-if ($number_of_sections_min && $number_of_sections_max) {
-    $filter_clauses[] = "features.f_name = 'Number of Sections' AND features.f_value BETWEEN {$number_of_sections_min} AND {$number_of_sections_max}";
+if ($number_of_sections_min !== '') {
+    $filter_clauses[] = "sectionsFeature.f_value >= {$number_of_sections_min}";
+}
+if ($number_of_sections_max !== '') {
+    $filter_clauses[] = "sectionsFeature.f_value <= {$number_of_sections_max}";
 }
 
 // Maximum Payload Capacity(kg) filter
-if ($maximum_payload_capacity_kg_min && $maximum_payload_capacity_kg_max) {
-    $filter_clauses[] = "features.f_name = 'Maximum Payload Capacity(kg)' AND features.f_value BETWEEN {$maximum_payload_capacity_kg_min} AND {$maximum_payload_capacity_kg_max}";
+if ($maximum_payload_capacity_kg_min !== '') {
+    $filter_clauses[] = "payloadFeature.f_value >= {$maximum_payload_capacity_kg_min}";
 }
+if ($maximum_payload_capacity_kg_max !== '') {
+    $filter_clauses[] = "payloadFeature.f_value <= {$maximum_payload_capacity_kg_max}";
+}
+
 
 // Construct the WHERE clause
 $where_clause = implode(' AND ', $filter_clauses);
 
-$query = "SELECT products.*, f2.f_value AS price FROM products 
-LEFT JOIN features AS f2 ON products.p_id = f2.product_id AND f2.f_name = 'price'
-WHERE {$where_clause}
-ORDER BY {$order_by} {$order_dir}";
+$query = "SELECT products.*, priceFeature.f_value AS price 
+          FROM products 
+          LEFT JOIN features AS priceFeature ON products.p_id = priceFeature.product_id AND priceFeature.f_name = 'price'
+          LEFT JOIN features AS extendedHeightFeature ON products.p_id = extendedHeightFeature.product_id AND extendedHeightFeature.f_name = 'Extended Height(m)'
+          LEFT JOIN features AS retractedHeightFeature ON products.p_id = retractedHeightFeature.product_id AND retractedHeightFeature.f_name = 'Retracted Height(m)'
+          LEFT JOIN features AS weightFeature ON products.p_id = weightFeature.product_id AND weightFeature.f_name = 'Weight(kg)'
+          LEFT JOIN features AS sectionsFeature ON products.p_id = sectionsFeature.product_id AND sectionsFeature.f_name = 'Number of Sections'
+          LEFT JOIN features AS payloadFeature ON products.p_id = payloadFeature.product_id AND payloadFeature.f_name = 'Maximum Payload Capacity(kg)'
+          WHERE {$where_clause}
+          ORDER BY {$order_by} {$order_dir}";
+
+
 
 $result = $conn->query($query);
 $data = [];
@@ -141,6 +170,17 @@ function toggleOrder($currentDir) {
 
     <form action="" method="get">
         <div class="feature-filters">
+
+            <fieldset class="feature-set">
+                <legend>Type</legend>
+                <select name="p_type">
+                    <option value="">-- Select Type --</option>
+                    <option value="mast" <?php echo $p_type_filter === 'mast' ? 'selected' : ''; ?>>Mast</option>
+                    <option value="accessory" <?php echo $p_type_filter === 'accessory' ? 'selected' : ''; ?>>Accessory</option>
+                    <option value="control panel" <?php echo $p_type_filter === 'control panel' ? 'selected' : ''; ?>>Control Panel</option>
+                </select>
+            </fieldset>
+
             <fieldset class="feature-set">
                 <legend>Extended Height(m)</legend>
                 Min: <input type="number" name="feature_Extended_Height_m_min" value="<?php echo $feature_Extended_Height_m_min; ?>">
@@ -174,6 +214,10 @@ function toggleOrder($currentDir) {
             <div>
                 <input type="submit" value="Filter">
             </div>
+            <div>
+                <a href="<?php echo $_SERVER['PHP_SELF']; ?>" class="unfilter-btn">Unfilter</a>
+            </div>
+
         </div>
 
         <table border='1' width='600'>
@@ -217,6 +261,7 @@ function toggleOrder($currentDir) {
                 } else {
                     echo "<tr><td colspan='6'>No published products found.</td></tr>";
                 }
+                
                 ?>
             </tbody>
         </table>

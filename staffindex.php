@@ -84,7 +84,6 @@ while ($row = $result->fetch_assoc()) {
     </table> 
 
     <br>
-    <a href="add.php"><button class="custom-link">ADD DATA</button></a><br>
     <br>
     <a href="customerindex.php" style="font-family: 'Ubuntu', sans-serif;">
         <strong><u>See the options for customers</u></strong>
