@@ -161,3 +161,40 @@ a:hover {
     justify-content: space-between; /* This will put maximum space between the two items */
     align-items: center; /* This will vertically center align them if they have different heights */
 }
+
+
+/* Mobile friendly adjustments */
+body {
+    font-family: 'Ubuntu', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard-options {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px; 
+    margin: 20px auto;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-option {
+    text-align: center;
+    padding: 15px 20px;
+    background-color: #ffffff;
+    border-top: 1px solid #e6e6e6;
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.dashboard-option:first-child {
+    border-top: none;
+}
+
+.dashboard-option:hover {
+    background-color: #e6e6e6;
+}

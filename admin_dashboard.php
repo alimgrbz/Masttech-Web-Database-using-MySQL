@@ -95,30 +95,29 @@ while ($row = $result->fetch_assoc()) {
 
     <br>
     <br>
-    <a href="customerindex.php" style="font-family: 'Ubuntu', sans-serif;">
-        <strong><u>See the options for customers</u></strong>
-    </a>
-    <a href="adder_dashboard.php" style="font-family: 'Ubuntu', sans-serif;">
-        <strong><u>See the status for ADDER</u></strong>
-    </a>
-    <a href="checker_dashboard.php" style="font-family: 'Ubuntu', sans-serif;">
-        <strong><u>See the status for CHECKER</u></strong>
-    </a>
-    <a href="approver_dashboard.php" style="font-family: 'Ubuntu', sans-serif;">
-        <strong><u>See the status for APPROVER</u></strong>
-    </a>
+    <div class="dashboard-options">
+        <a href="customerindex.php" class="dashboard-option">See the options for customers</a>
+        <br>
+    <br>
+        <a href="adder_dashboard.php" class="dashboard-option">See the status for ADDER</a>
+        <br>
+    <br>
+        <a href="checker_dashboard.php" class="dashboard-option">See the status for CHECKER</a>
+        <br>
+    <br>
+        <a href="approver_dashboard.php" class="dashboard-option">See the status for APPROVER</a>
+        <br>
+    <br>    <br>
+    <br>
+        <?php
+            // Check if user is admin
+            if (isset($_SESSION['userType']) && $_SESSION['userType'] === 'admin') {
+        ?>
+            <a href="admin_access_page.php" class="dashboard-option">Add a new staff</a>
+        <?php
+            }
+        ?>
+</div>
 
-
-
-    <?php
-        // Check if user is admin
-        if (isset($_SESSION['userType']) && $_SESSION['userType'] === 'admin') {
-    ?>
-        <a href="admin_access_page.php" style="font-family: 'Ubuntu', sans-serif;">
-            <strong><u> add a new staff </u></strong>
-        </a>
-    <?php
-        }
-    ?>
 </body>
 </html>
