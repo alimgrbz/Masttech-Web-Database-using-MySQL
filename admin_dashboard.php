@@ -1,17 +1,17 @@
 <?php
 
-
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 include("db.php");
 session_start();
 
-// Check if the user is not logged in
-if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
+// Check if the user is not logged in or not an admin
+if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in'] || (isset($_SESSION['userType']) && $_SESSION['userType'] != 'admin')) {
     header("Location: index.html");
     exit;
 }
+
 $data = [];
 
 $result = $conn->query("SELECT products.*, f1.f_value AS cost, f2.f_value AS price FROM products 
@@ -21,6 +21,8 @@ LEFT JOIN features AS f2 ON products.p_id = f2.product_id AND f2.f_name = 'price
 while ($row = $result->fetch_assoc()) {
     $data[] = $row;
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -105,5 +107,18 @@ while ($row = $result->fetch_assoc()) {
     <a href="approver_dashboard.php" style="font-family: 'Ubuntu', sans-serif;">
         <strong><u>See the status for APPROVER</u></strong>
     </a>
+
+
+
+    <?php
+        // Check if user is admin
+        if (isset($_SESSION['userType']) && $_SESSION['userType'] === 'admin') {
+    ?>
+        <a href="admin_access_page.php" style="font-family: 'Ubuntu', sans-serif;">
+            <strong><u> add a new staff </u></strong>
+        </a>
+    <?php
+        }
+    ?>
 </body>
 </html>

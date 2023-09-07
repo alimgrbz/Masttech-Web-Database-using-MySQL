@@ -66,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     break;
                 case 'admin':
                     // Redirect to any default dashboard for admin or leave this blank if you want to implement multiple choices for admin
-                    header('Location: admin4_dashboard.php');
+                    header('Location: admin_dashboard.php');
                     break;
                 default:
                     echo "Invalid user type.";
