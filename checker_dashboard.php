@@ -4,19 +4,19 @@ ini_set('display_errors', 1);
 
 include("db.php");
 session_start();
-
+/*
 // Check if the user is not logged in
 if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
     header("Location: index.html");
     exit;
 }
 
-// Check if the user is not an 'adder' staff
-if (!isset($_SESSION['userType']) || $_SESSION['userType'] !== 'approver') {
+// Check if the user is not an 'checker' staff
+if (!isset($_SESSION['userType']) || ($_SESSION['userType'] !== 'checker' && $_SESSION['userType'] !== 'admin')) {
     header("Location: index.html");  // Redirect to a page informing them they are unauthorized
     exit;
 }
-
+*/
 
 $statuses = ['WIP_add', 'WIP_check'];
 $data = [];

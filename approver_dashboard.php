@@ -11,8 +11,8 @@ if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
     exit;
 }
 
-// Check if the user is not an 'adder' staff
-if (!isset($_SESSION['userType']) || $_SESSION['userType'] !== 'checker') {
+// Check if the user is not an 'checker' staff
+if (!isset($_SESSION['userType']) || ($_SESSION['userType'] !== 'approver' && $_SESSION['userType'] !== 'admin')) {
     header("Location: index.html");  // Redirect to a page informing them they are unauthorized
     exit;
 }

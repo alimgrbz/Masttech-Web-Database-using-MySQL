@@ -1,7 +1,6 @@
 <?php
 
 
-
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -13,21 +12,11 @@ if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
     header("Location: index.html");
     exit;
 }
-
-// Check if the user is not an 'adder' staff
-if (!isset($_SESSION['userType']) || ($_SESSION['userType'] !== 'adder' && $_SESSION['userType'] !== 'admin')) {
-    header("Location: index.html");  // Redirect to a page informing them they are unauthorized
-    exit;
-}
-
-
-$status = 'WIP_add';
 $data = [];
 
 $result = $conn->query("SELECT products.*, f1.f_value AS cost, f2.f_value AS price FROM products 
 LEFT JOIN features AS f1 ON products.p_id = f1.product_id AND f1.f_name = 'cost'
-LEFT JOIN features AS f2 ON products.p_id = f2.product_id AND f2.f_name = 'price'
-WHERE products.status = '{$status}'");
+LEFT JOIN features AS f2 ON products.p_id = f2.product_id AND f2.f_name = 'price'");
 
 while ($row = $result->fetch_assoc()) {
     $data[] = $row;
@@ -39,25 +28,38 @@ while ($row = $result->fetch_assoc()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masttech Product Database - WIP_add</title>
+    <title>Masttech Product Database</title>
     <link rel="stylesheet" href="db_style.css">
 </head>
 <body>
     <img src="masttech-logo.png" alt="Masttech Logo" id="masttechLogo">
     <br>
 
-    <h2>Products</h2>
+    <script>
+        function changeColorOnHover(row) {
+            if (row.classList.contains('accepted')) {
+                row.style.backgroundColor = 'green';
+            }
+        }
 
-    <table border='1' width='600'>
-        <tr align='center' bgcolor='#042433'>
+        function revertColor(row) {
+            if (row.classList.contains('accepted')) {
+                row.style.backgroundColor = '';
+            }
+        }
+    </script>
+
+    <table border="1" width="600">
+        <tr align="center" bgcolor="#042433">
             <td>Model</td>
             <td>Version</td>
             <td>Name</td>
             <td>Type</td>
             <td>Cost</td>
             <td>Price</td>
+            <td>Status</td> <!-- Added column for Status -->
             <td>Features</td>
-            <td colspan='2'>Action</td>
+            <td colspan="2">Action</td>
         </tr>
 
         <?php
@@ -70,28 +72,38 @@ while ($row = $result->fetch_assoc()) {
                 $type = $product['p_type'] ?? '';
                 $cost = $product['cost'] ?? ''; 
                 $price = $product['price'] ?? ''; 
+                $status = $product['status'] ?? '';  // Fetch status
 
-                echo "<tr>
+                echo "<tr class='{$status}' onmouseover='changeColorOnHover(this)' onmouseout='revertColor(this)'>
                     <td>{$model}</td>
                     <td>{$version}</td>
                     <td>{$name}</td>
                     <td>{$type}</td>
                     <td>{$cost}</td>
                     <td>{$price}</td>
-                    <td><a href='view_features.php?id={$id}'>View Features</a></td>
+                    <td>{$status}</td>  <!-- Display status -->
+                    <td><a class='subtle-button' href='view_features.php?id={$id}'>View Features</a></td>
                     <td><a href='edit_product.php?id=$id'>EDIT</a></td>
                     <td><a href='delete_product.php?id=$id'>DELETE</a></td>
                 </tr>";
             }
-        } else {
-            echo "<tr><td colspan='8'>No products found with status WIP_add.</td></tr>";
         }
         ?>
+    </table> 
 
-    </table><br>
-
-    <a href="add.php"><button class="custom-link">ADD DATA</button></a><br><br>
-    <a href="staffindex.php" style="font-family: 'Ubuntu', sans-serif;"><strong><u>Return to Main View</u></strong></a>
-
+    <br>
+    <br>
+    <a href="customerindex.php" style="font-family: 'Ubuntu', sans-serif;">
+        <strong><u>See the options for customers</u></strong>
+    </a>
+    <a href="adder_dashboard.php" style="font-family: 'Ubuntu', sans-serif;">
+        <strong><u>See the status for ADDER</u></strong>
+    </a>
+    <a href="checker_dashboard.php" style="font-family: 'Ubuntu', sans-serif;">
+        <strong><u>See the status for CHECKER</u></strong>
+    </a>
+    <a href="approver_dashboard.php" style="font-family: 'Ubuntu', sans-serif;">
+        <strong><u>See the status for APPROVER</u></strong>
+    </a>
 </body>
 </html>
