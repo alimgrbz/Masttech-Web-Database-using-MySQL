@@ -34,13 +34,16 @@
         // Upload image data if available
         // Upload image data if available
         if (isset($_FILES['product_image']) && $_FILES['product_image']['error'] == 0) {
-            $imageData = addslashes(file_get_contents($_FILES['product_image']['tmp_name']));
+            $imageData = file_get_contents($_FILES['product_image']['tmp_name']);
             $stmtImage = $conn->prepare("INSERT INTO product_image (image_data, p_id) VALUES (?, ?)");
-            $stmtImage->bind_param("si", $imageData, $lastProductId);
-            if (!$stmtImage->execute()) {
+            $stmtImage->bind_param("si", $imageData, $lastProductId); // Replace $lastProductId with the actual product ID
+            if ($stmtImage->execute()) {
+                echo "Image uploaded successfully.";
+            } else {
                 echo "Error: " . $stmtImage->error;
-                exit;
             }
+        } else {
+            echo "Image upload failed.";
         }
 
         
@@ -155,6 +158,11 @@
                     </div>
                 </td>
             </tr>
+            <form enctype="multipart/form-data" method="post" action="upload.php">
+                <input type="file" name="product_image">
+                <input type="submit" value="Upload Image">
+            </form>
+
             <tr>
                 <td>Product Image</td>
                 <td>:</td>

@@ -183,10 +183,12 @@ label {
 
 /* Image styling */
 img.product-image {
-    max-width: 100%; /* Make the image responsive */
+    max-width: 30%; /* Make the image responsive */
+    height: auto; /* This ensures the aspect ratio is maintained */
     display: block;
     margin: 0 auto 20px auto; /* Center the image and add some bottom margin */
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
+

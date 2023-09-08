@@ -8,6 +8,9 @@ if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
     exit;
 }
 
+$product_name = null;
+
+
 $id = $_GET['id'] ?? null;
 $features = [];
 $image_data = null;
@@ -45,6 +48,7 @@ if ($id) {
         $row_text = $result_text->fetch_assoc();
         $product_text = $row_text['content'];
     }
+
 }
 ?>
 <!DOCTYPE html>
@@ -68,10 +72,18 @@ if ($id) {
             padding: 10px;
         }
 
-        .product-image {
+        .product-image-container {
             flex: 1;
-            max-width: 300px;
-            padding: 10px;
+            max-width: 50%;
+            display: flex;
+            justify-content: center; /* Center the image horizontally */
+            align-items: center; /* Center the image vertically */
+        }
+
+        .product-image {
+            max-width: 100%; /* Ensure the image fits inside its container */
+            height: auto; /* Maintain the aspect ratio */
+            border: 1px solid #ccc; /* Add a border around the image container */
         }
 
         .product-description {
@@ -110,13 +122,22 @@ if ($id) {
     <h1>Product Features</h1>
     <div class="product-info-container">
         <?php if ($image_data) : ?>
-            <div class="product-image">
+            <div class="product-image-container">
                 <?php
-                // Determine the image format (JPEG or PNG) based on the data
-                $imageFormat = 'jpeg'; // Change to 'png' if PNG format
-                $base64Image = 'data:image/' . $imageFormat . ';base64,' . base64_encode($image_data);
+                // Determine the image format (JPEG or PNG) based on the actual data
+                $finfo = new finfo(FILEINFO_MIME_TYPE);
+                $imageFormat = $finfo->buffer($image_data);
+
+                // Check the image format and create the appropriate data URI
+                if ($imageFormat === 'image/jpeg' || $imageFormat === 'image/jpg') {
+                    $base64Image = 'data:image/jpeg;base64,' . base64_encode($image_data);
+                } elseif ($imageFormat === 'image/png') {
+                    $base64Image = 'data:image/png;base64,' . base64_encode($image_data);
+                } else {
+                    echo "Unsupported image format.";
+                }
                 ?>
-                <img src="<?php echo $base64Image; ?>" alt="Image">
+                <img src="<?php echo $base64Image; ?>" alt="Image" class="product-image">
             </div>
         <?php endif; ?>
         <?php if ($product_text) : ?>
