@@ -106,29 +106,34 @@ if ($id) {
     </style>
 </head>
 <body>
-    <img src="masttech-logo.png" alt="Masttech Logo" id="masttechLogo">
-
+    <img src="masttech-logo.png" alt="Masttech Logo" id="masttechLogo"> 
     <h1>Product Features</h1>
     <div class="product-info-container">
-        <?php if (isset($image_data)) : ?>
+        <?php if ($image_data) : ?>
             <div class="product-image">
-                <img src="data:image/jpeg;base64,<?php echo base64_encode($image_data); ?>" alt="Product Image">
+                <?php
+                // Determine the image format (JPEG or PNG) based on the data
+                $imageFormat = 'jpeg'; // Change to 'png' if PNG format
+                $base64Image = 'data:image/' . $imageFormat . ';base64,' . base64_encode($image_data);
+                ?>
+                <img src="<?php echo $base64Image; ?>" alt="Image">
             </div>
         <?php endif; ?>
-        <?php if (isset($product_text)) : ?>
+        <?php if ($product_text) : ?>
             <div class="product-info-box product-description">
                 <h4 class="custom-heading">Product Information:</h4>
                 <p><?php echo $product_text; ?></p>
             </div>
         <?php endif; ?>
     </div>
+
     <table>
         <tr bgcolor="#042433">
             <th>Feature</th>
             <th>Value</th>
         </tr>
         <?php
-        if(!empty($features)) {
+        if (!empty($features)) {
             foreach ($features as $feature => $value) {
                 echo "<tr>
                     <td>{$feature}</td>

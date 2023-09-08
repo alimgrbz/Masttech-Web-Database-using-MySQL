@@ -32,6 +32,7 @@
         $lastProductId = $conn->insert_id;  // Get the ID of the last inserted product
 
         // Upload image data if available
+        // Upload image data if available
         if (isset($_FILES['product_image']) && $_FILES['product_image']['error'] == 0) {
             $imageData = addslashes(file_get_contents($_FILES['product_image']['tmp_name']));
             $stmtImage = $conn->prepare("INSERT INTO product_image (image_data, p_id) VALUES (?, ?)");
@@ -41,6 +42,7 @@
                 exit;
             }
         }
+
         
         // Insert product text as VARCHAR
         $productText = $_POST['product_text']; // Get the product text from the form
