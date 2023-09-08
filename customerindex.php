@@ -266,4 +266,12 @@ function toggleOrder($currentDir) {
     </form>
 </body>
 
+<br>
+    <br>
+
+    <a href="logout.phy" style="font-family: 'Ubuntu', sans-serif;">
+        <strong><u>Log out</u></strong>
+    </a>
+
+
 </html>

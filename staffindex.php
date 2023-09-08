@@ -97,4 +97,13 @@ while ($row = $result->fetch_assoc()) {
         <strong><u>See the options for customers</u></strong>
     </a>
 </body>
+
+
+<br>
+    <br>
+
+    <a href="logout.php" style="font-family: 'Ubuntu', sans-serif;">
+        <strong><u>Log out</u></strong>
+    </a>
+
 </html>
