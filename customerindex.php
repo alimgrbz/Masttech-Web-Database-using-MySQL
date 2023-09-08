@@ -139,7 +139,6 @@ function toggleOrder($currentDir) {
             padding: 10px;
         }
 
-        /* Additional styles */
         .feature-filters {
             background-color: #e1e5e8;
             margin: 20px 0;
@@ -210,15 +209,14 @@ function toggleOrder($currentDir) {
                 Min: <input type="number" name="maximum_payload_capacity_kg_min" value="<?php echo $maximum_payload_capacity_kg_min; ?>">
                 Max: <input type="number" name="maximum_payload_capacity_kg_max" value="<?php echo $maximum_payload_capacity_kg_max; ?>">
             </fieldset>
-
             <div>
-                <input type="submit" value="Filter">
-            </div>
-            <div>
-                <a href="<?php echo $_SERVER['PHP_SELF']; ?>" class="unfilter-btn">Unfilter</a>
+                <input type="submit" value="Filter" class="filter-btn">
             </div>
 
-        </div>
+            <div>
+                <a href="<?php echo $_SERVER['PHP_SELF']; ?>" class="filter-btn">Unfilter</a>
+            </div>
+
 
         <table border='1' width='600'>
             <thead>

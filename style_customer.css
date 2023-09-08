@@ -119,6 +119,23 @@ a:hover {
     width: 300px;
     margin-bottom: 20px;
 }
+.filter-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #042433; /* Background color for the button */
+    color: white; /* Text color for the button */
+    text-decoration: none; /* Remove underline from links */
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Style for hover and active states */
+.filter-btn:hover,
+.filter-btn:active {
+    background-color: #0e3a6e; /* Change background color on hover/active */
+}
+
 
 /* Input table styling */
 form {

@@ -67,7 +67,7 @@ a:hover {
 }
 
 #masttechLogo {
-    width: 30%; /* Set the width to 100% to stretch the image */
+    width: 20%; /* Set the width to 100% to stretch the image */
     height: auto; /* Automatically adjust the height to maintain the aspect ratio */
     display: block; /* Ensure it's displayed as a block element */
     margin-bottom: 20px;
@@ -156,7 +156,7 @@ a:hover {
 }
 
 .filter-btn:hover, .unfilter-btn:hover {
-    background-color: #2980b9;  /* Slightly darker color on hover */
+    background-color: #7499b1;  /* Slightly darker color on hover */
 }
 
 .filter-actions {
@@ -178,19 +178,20 @@ body {
     display: flex;
     flex-direction: column;
     max-width: 400px; 
-    margin: 20px auto;
+    margin: auto  ;
+    margin-bottom: 60px;
     border-radius: 5px;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
 }
 
 .dashboard-option {
     text-align: center;
     padding: 15px 20px;
-    background-color: #ffffff;
-    border-top: 1px solid #e6e6e6;
-    color: #333;
-    text-decoration: none;
+    background-color: #cfd0d1;
+    border-top: 1px solid #ffffff;
+    color: #071e3f;
+    text-decoration: rgb(159, 98, 159);
     font-weight: bold;
 }
 
@@ -199,7 +200,7 @@ body {
 }
 
 .dashboard-option:hover {
-    background-color: #e6e6e6;
+    background-color: #7c8287;
 }
 
 *{

@@ -94,21 +94,20 @@ while ($row = $result->fetch_assoc()) {
     </table> 
 
     <br>
-    <br>
+
     <div class="dashboard-options">
         <a href="customerindex.php" class="dashboard-option">See the options for customers</a>
-        <br>
-    <br>
-        <a href="adder_dashboard.php" class="dashboard-option">See the status for ADDER</a>
-        <br>
-    <br>
-        <a href="checker_dashboard.php" class="dashboard-option">See the status for CHECKER</a>
-        <br>
-    <br>
-        <a href="approver_dashboard.php" class="dashboard-option">See the status for APPROVER</a>
-        <br>
-    <br>    <br>
-    <br>
+  
+
+
+        <a href="adder_dashboard.php" class="dashboard-option"> -> See the status for ADDER</a>
+
+
+        <a href="checker_dashboard.php" class="dashboard-option"> -> See the status for CHECKER</a>
+
+        <a href="approver_dashboard.php" class="dashboard-option"> -> See the status for APPROVER</a>
+
+  
         <?php
             // Check if user is admin
             if (isset($_SESSION['userType']) && $_SESSION['userType'] === 'admin') {
