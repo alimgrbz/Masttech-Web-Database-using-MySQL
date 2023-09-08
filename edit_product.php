@@ -50,12 +50,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmtFeature->execute();
     }
 
+    // Check if the user provided a new image
+    if (isset($_FILES['new_product_image']) && $_FILES['new_product_image']['error'] == 0) {
+        // Delete the existing image if the delete checkbox is selected
+        if (isset($_POST['delete_existing_image']) && $_POST['delete_existing_image'] == 1) {
+            $stmtDeleteImage = $conn->prepare("DELETE FROM product_image WHERE p_id = ?");
+            $stmtDeleteImage->bind_param("i", $id);
+            $stmtDeleteImage->execute();
+        }
+
+        // Upload the new image
+        $newImageData = addslashes(file_get_contents($_FILES['new_product_image']['tmp_name']));
+        $stmtNewImage = $conn->prepare("INSERT INTO product_image (image_data, p_id) VALUES (?, ?)");
+        $stmtNewImage->bind_param("si", $newImageData, $id);
+        $stmtNewImage->execute();
+    }
+
+    // Check if the user modified the product description text
+    if ($_POST['product_text'] != $product['product_text']) {
+        $productText = $_POST['product_text'];
+        $stmtText = $conn->prepare("UPDATE product_text SET content = ? WHERE p_id = ?");
+        $stmtText->bind_param("si", $productText, $id);
+        $stmtText->execute();
+    }
+
     echo "Record updated successfully";
     header('Location: staffindex.php');
     exit;
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,13 +86,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Product</title>
     <link rel="stylesheet" href="style_customer.css">
+    <!-- Include Quill styles -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <style>
+        /* Add custom styles for the Quill editor */
+        #editor-container {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        /* Set the height of the editor */
+        #editor {
+            height: 200px;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #2b486b;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
 
-<form method="post" action="">
+<form method="post" action="" enctype="multipart/form-data">
+<img src="masttech-logo.png" alt="Masttech Logo" id="masttechLogo">
+
     <table border="0" width="500">
         <!-- ... Other fields ... -->
-        <tr>
+        <<tr>
             <td>Model</td>
             <td>:</td>
             <td><input type="text" name="model" value="<?= $product['p_model'] ?? '' ?>"></td>
@@ -125,6 +169,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <td><input type="text" name="maximum_payload_capacity_kg" value="<?= $features['Maximum Payload Capacity(kg)'] ?? '' ?>"></td>
         </tr>
         <tr>
+            <td>Delete Existing Image</td>
+            <td>:</td>
+            <td><input type="checkbox" name="delete_existing_image" value="1"> Yes</td>
+        </tr>
+        <tr>
+            <td>New Product Image</td>
+            <td>:</td>
+            <td><input type="file" name="new_product_image"></td>
+        </tr>
+        <tr>
+            <td>Product Description</td>
+            <td>:</td>
+            <td>
+                <!-- Add a container for the Quill editor -->
+                <div id="editor-container">
+                    <div id="editor"></div>
+                </div>
+                <!-- Add a hidden input to store the editor content -->
+                <textarea name="product_text" id="product_text" style="display: none;"></textarea>
+            </td>
+        </tr>
+        <tr>
             <td>
                 <input type="hidden" name="id" value="<?= $id ?>">
                 <input type="submit" value="SAVE">
@@ -134,6 +200,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </form>
 
 <a href="staffindex.php"><button>BACK TO MAIN TABLE</button></a>
+
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script>
+    const quill = new Quill('#editor', {
+        theme: 'snow',
+    });
+
+    function prepareFormData() {
+        const productText = quill.root.innerHTML; // Get the Quill editor's HTML content
+        document.getElementById('product_text').value = productText; // Set the value in the hidden textarea
+    }
+
+    // Call prepareFormData() on form submission
+    document.querySelector('form').addEventListener('submit', prepareFormData);
+</script>
 
 </body>
 </html>

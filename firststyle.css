@@ -18,7 +18,12 @@ body {
     max-width: 400px;
     text-align: center;
 }
-
+#masttechLogo {
+    width: 30%; /* Set the width to 100% to stretch the image */
+    height: auto; /* Automatically adjust the height to maintain the aspect ratio */
+    display: block; /* Ensure it's displayed as a block element */
+    margin-bottom: 20px;
+}
 h1, h2 {
     text-align: center;
 }

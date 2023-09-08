@@ -30,9 +30,9 @@ if (isset($_GET['id'])) {
     $stmtProduct->close();
     $conn->close();
 
-    header("Location: staffindex.php");  // Redirect back to the product page
-} else {
+    header("Location: " . $_SERVER['HTTP_REFERER']);    
     echo "No product ID provided.";
 }
 
 ?>
+   

@@ -66,6 +66,13 @@ a:hover {
     text-decoration: underline;
 }
 
+#masttechLogo {
+    width: 30%; /* Set the width to 100% to stretch the image */
+    height: auto; /* Automatically adjust the height to maintain the aspect ratio */
+    display: block; /* Ensure it's displayed as a block element */
+    margin-bottom: 20px;
+}
+
 .custom-link,
 .subtle-button {
     color: #fff;
@@ -115,10 +122,6 @@ a:hover {
     background-color: var(--darker-pastel-green);
 }
 
-#masttechLogo {
-    width: 300px;
-    margin-bottom: 20px;
-}
 
 .products-grid {
     display: grid;
@@ -198,3 +201,18 @@ body {
 .dashboard-option:hover {
     background-color: #e6e6e6;
 }
+
+*{
+    margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+}
+ 
+#content{
+    width: 50%;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    border: 1px solid #cbcbcb;
+}
+
