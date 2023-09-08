@@ -97,7 +97,7 @@ if(isset($_GET['delete']) && isset($_GET['id'])) {
                 <td><a href='view_features.php?id={$product['p_id']}'>View Features</a></td>
                 <td>
                     <a href='?approve=1&id={$product['p_id']}'>Approve</a> | 
-                    <a href='?delete=1&id={$product['p_id']}'>Delete Request</a>
+                    <a href='?delete=1&id={$product['p_id']}'>Decline</a>
                 </td>
             </tr>";
         }

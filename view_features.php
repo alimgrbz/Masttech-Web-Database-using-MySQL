@@ -128,7 +128,7 @@ if ($id) {
     </div>
 
     <table>
-        <tr bgcolor="#042433">
+        <tr bgcolor="#cfd0d1"> 
             <th>Feature</th>
             <th>Value</th>
         </tr>
@@ -148,6 +148,6 @@ if ($id) {
         ?>
     </table>
     <br>
-    <a href="javascript:history.back()"><strong><u>Back to Main Page</u></strong></a>
+    <a href="javascript:history.back()"><strong><u> Back to Main View</u></strong></a>
 </body>
 </html>
